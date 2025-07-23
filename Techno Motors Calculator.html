@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IAA Canada Auction Fee Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #0077cc;
+    }
+    label, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IAA Canada Fee Calculator</h1>
+    <label for="bid">Enter Your Bid (CAD):</label>
+    <input type="number" id="bid" placeholder="e.g. 3300">
+
+    <button onclick="calculateTotal()">Calculate Total Price</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateTotal() {
+      const bid = parseFloat(document.getElementById("bid").value);
+      if (isNaN(bid) || bid <= 0) {
+        document.getElementById("result").textContent = "Please enter a valid bid amount.";
+        return;
+      }
+
+      const buyerFee = bid * 0.14;        // 14% of bid
+      const baseFee = 95.00;
+      const envFee = 50.00;
+      const auctionFee = 120.00;
+      const extraFee = 500.00;
+      const subtotal = bid + buyerFee + baseFee + envFee + auctionFee + extraFee;
+      const taxRate = 0.13;
+      const tax = subtotal * taxRate;
+      const total = subtotal + tax;
+
+      document.getElementById("result").textContent =
+        `Estimated Final Price: $${total.toFixed(2)} CAD`;
+    }
+
+    // Trigger calculation when Enter is pressed
+    document.getElementById("bid").addEventListener("keyup", function(event) {
+      if (event.key === "Enter") {
+        calculateTotal();
+      }
+    });
+  </script>
+</body>
+</html>
